@@ -4,9 +4,7 @@ from app01.models import Vehicles, Age, Mileage
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        print('список автомобилей в базе')
+        print('очищение базы')
+        Vehicles.objects.all().delete()
 
-        result = Age.objects.all()
-        for i in result:
-            print(i)
 

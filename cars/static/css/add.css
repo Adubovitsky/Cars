@@ -1,0 +1,39 @@
+.new {
+margin-top:100px
+}
+
+.topnew {
+vertical-align:top
+}
+
+.bborder {
+border:1px solid blue;
+}
+
+.bborder1 {
+border-width:1px;
+border-color:black;
+border-style:solid;
+}
+
+.mybutton{
+background: yellow;
+color: blue;
+border-radius: 15px;
+}
+
+.ttt{
+color: yellow;
+font-size: 18px;
+}
+
+.ttt1{
+color: rgb(0,255,0);
+font-size: 18px;
+}
+
+.ttt2{
+color: white ;
+font-size: 22px;
+
+}

@@ -4,19 +4,31 @@
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('/static/images/car-11.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
-        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
-          <div class="col-lg-8 ftco-animate">
-          	<div class="text w-100 text-center mb-md-5 pb-md-5">
-	            <h1 class="mb-4">Здесь будут выводится данные поиска</h1>
-	            <p style="font-size: 18px;">Машина</p>
-	            <a href="https://vimeo.com/45830194" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
-<!--	            	<div class="icon d-flex align-items-center justify-content-center">-->
-	            		<span class="ion-ios-play"></span>
-	            	</div>
+          <div class="row align-items-center" style="height:500px">
+            <div class="col-lg-6 ftco-animate" >
 
-	            </a>
+                            <form class="ttt1" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+
+
+
+
+                                <p></p>
+                                <input type="submit" value="Искать">
+                            </form>
             </div>
-          </div>
+
+             <div class="col-lg-6">
+                <p class="ttt">
+                В период настройки и тестирования сайта рекомендуется вводить названия и модели автомобилей из числа
+                    наиболее популярных. Например, ford focus, skoda fabia, audi q5, volkwagen tiguan, kia sportage
+                </p>
+                  <p class="ttt2">
+                Внимание!!! Время обработки запроса составляет несколько минут
+                </p>
+
+             </div>
         </div>
       </div>
     </div>
@@ -25,14 +37,3 @@
 {% endblock %}
 
 
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1> Тест</h1>-->
-<!--</body>-->
-<!--</html>-->

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{%block title%}{%endblock%}</title>
+    <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,6 +27,12 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+      <style>
+          .text2{color:black; font-size:20px}
+      </style>
+
+
   </head>
   <body>
 
@@ -40,48 +46,16 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="{% url 'cars:index' %}" class="nav-link">Главная</a></li>
-<!--	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>-->
-<!--	          <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>-->
-<!--	          <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>-->
+
+	          <li class="nav-item"><a href="{% url 'cars:car_list' %}" class="nav-link">Машины</a></li>
 	          <li class="nav-item"><a href="{% url 'cars:search' %}" class="nav-link">Поиск</a></li>
-<!--	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>-->
 	          <li class="nav-item"><a href="{% url 'cars:contact' %}" class="nav-link">Контакты</a></li>
 	        </ul>
 	      </div>
 	    </div>
 	  </nav>
     <!-- END nav -->
-{%block content%}{%endblock%}
-
-<!--    <div class="hero-wrap ftco-degree-bg" style="background-image: url('/static/images/bg_1.jpg');" data-stellar-background-ratio="0.5">-->
-<!--      <div class="overlay"></div>-->
-<!--      <div class="container">-->
-<!--        <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">-->
-<!--          <div class="col-lg-8 ftco-animate">-->
-<!--&lt;!&ndash;          	<div class="text w-100 text-center mb-md-5 pb-md-5">&ndash;&gt;-->
-<!--&lt;!&ndash;	            <h1 class="mb-4">Найдите себе машину в Германии</h1>&ndash;&gt;-->
-<!--&lt;!&ndash;	            <p style="font-size: 18px;">Сравните сколько стоят аналогичные машины в России и Германии и найдите для себя оптимальный вариант</p>&ndash;&gt;-->
-<!--&lt;!&ndash;	            <a href="https://vimeo.com/45830194" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;	            	<div class="icon d-flex align-items-center justify-content-center">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;	            		<span class="ion-ios-play"></span>&ndash;&gt;-->
-<!--&lt;!&ndash;	            	</div>&ndash;&gt;-->
-<!--&lt;!&ndash;	            	<div class="heading-title ml-5">&ndash;&gt;-->
-<!--&lt;!&ndash;		            	<span>Easy steps for renting a car</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                        {% for car in cars %}&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li>{{car.brand}}</li>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                          <li>Чай</li>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                          <li>Молоко</li>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                            {% endfor %}&ndash;&gt;-->
-<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
-
-<!--&lt;!&ndash;&lt;!&ndash;	            	</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;	            </a>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+{% block content %}{% endblock %}
 
 
 
