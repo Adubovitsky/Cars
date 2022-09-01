@@ -5,11 +5,11 @@ import pprint
 
 class Command(BaseCommand):
 
-    def filldb(self):
+    def filldb(self, par, par2):
         class cars():
-            def __init__(self, brend):
+            def __init__(self, brend, model):
                 self.year = 0
-                self.model = ""
+                self.model = model
                 self.price = 0
                 self.brend = brend
                 self.kilometer = 0
@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 pages = self.count // 37 + 1
                 full_list = []
                 for page in range(pages):
-                    result = requests.get(f"https://auto.ru/himki/cars/{self.brend}/all/?year_from=2012&km_age_to=100000&page={page}",
+                    result = requests.get(f"https://auto.ru/himki/cars/{self.brend}/{self.model}/all/?year_from=2017&km_age_to=100000&page={page}",
                                           headers=self.headers)
                     data = result.json()
                     offers = data['listing']['offers']
@@ -102,26 +102,31 @@ class Command(BaseCommand):
                         dict['пробег'] = self.mileage
                         dict['km'] = self.kilometer
                         dict['руль'] = self.steering_wheel
+                        dict['страна'] = 'ru'
 
                         full_list.append(dict)
                 return full_list
 
-        brends = ["audi","bmw", "ford", "honda", "hyundai", "jeep", "kia", "lexus", "mazda", "mercedes", "nissan", "opel",
+        brands = ["audi","bmw", "ford", "honda", "hyundai", "jeep", "kia", "lexus", "mazda", "mercedes", "nissan", "opel",
                   "skoda", "subaru", "toyota", "volkswagen", "volvo", "chevrolet", "chrysler"]
-        brend = "subaru"
-        if brend in brends:
-            carlist = cars(brend)
+
+        if par in brands:
+            carlist = cars(par, par2)
             carlist.get_count()
             return carlist.get_keydata()
         else:
             print("Введено неверное название автомобиля")
 
+    def add_arguments(self, parser):
+        parser.add_argument('par', type=str)
+        parser.add_argument('par2', type=str)
 
     def handle(self, *args, **options):
         print('Заполнение данных автомобилей из auto.ru')
-        Vehicles.objects.all().delete()
-        data = (Command.filldb(self))
+        par = options['par']
+        par2 = options['par2']
+        data = (Command.filldb(self, par, par2))
         for i in data:
             Vehicles.objects.create(brand = i['брэнд'], model = i['модель'], production_year = Age.objects.get(production_year = i['год выпуска']),
-                                    milage = Mileage.objects.get(name = i['пробег']), km = i['km'] , price = i['цена'], engine = i['объем двигателя'] )
+                                    milage = Mileage.objects.get(name = i['пробег']), km = i['km'] , price = i['цена'], engine = i['объем двигателя'], country = i['страна'] )
 

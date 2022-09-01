@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero-wrap ftco-degree-bg" style="background-image: url('/static/images/car-11.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+          <div class="row align-items-center" style="height:500px">
+            <div class="col-lg-6 ftco-animate" >
+
+                            <form class="ttt1" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+
+
+
+
+                                <p></p>
+                                <input type="submit" value="Искать">
+                            </form>
+            </div>
+
+             <div class="col-lg-6">
+                <p class="ttt">
+                В период настройки и тестирования сайта рекомендуется вводить названия и модели автомобилей из числа
+                    наиболее популярных. Например, ford focus, skoda fabia, audi q5, volkwagen tiguan, kia sportage
+                </p>
+                  <p class="ttt2">
+                Внимание!!! Время обработки запроса составляет несколько минут
+                </p>
+
+             </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}
+
+

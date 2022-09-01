@@ -6,7 +6,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print('список автомобилей в базе')
 
-        miles = Vehicles.objects.all()
-        for i in miles:
+        result = Age.objects.all()
+        for i in result:
             print(i)
 

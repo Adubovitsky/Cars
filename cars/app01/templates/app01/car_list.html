@@ -1,0 +1,111 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content%}
+
+
+    <div class="hero-wrap ftco-degree-bg"  data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters justify-content-start align-items-center justify-content-center">
+          <div class="col-lg-12 justify-content-start align-items-center justify-content-center" >
+              <p> </p>
+          </div>
+        </div>
+          <div class="row no-gutters">
+          <div class="col-lg-12" style="height:100px" >
+              <p></p>
+          </div>
+        </div>
+           </div>
+          <div class="row no-gutters" >
+          <div class="col-lg-5 align-items-center justify-content-center" style="height:200px" >
+             <img src="{% static 'images/Russia_flag.jpg'%}" style="max-height:100%; margin-left:150px">
+          </div>
+              <div class="col-lg-2" align="bottom">
+                  <h3>
+                       <a href="{% url 'cars:car_create'%}" >Добавить автомобиль</a>
+                  </h3>
+
+              </div>
+        <div class="col-lg-5" style="height:200px">
+              <img src="{% static 'images/Geman_flag.jpg'%}" style="max-height:100%; margin-left:50px">
+          </div>
+          </div>
+
+              <div class="row no-gutters slider-text justify-content-start justify-content-center">
+                    <div class="col-lg-1 ftco-animate"> </div>
+                    <div class="col-lg-5 ftco-animate" >
+
+                  <h1 align="center"> Сайт Авто.ру</h1>
+
+
+                        <table>
+                            <tr style="color:blue">
+                                <th>  Марка</th>
+                                <th> Модель</th>
+                                <th> Год выпуска</th>
+                                <th> Пробег</th>
+                                <th> Объем двигателя</th>
+                                <th> Цена, руб.</th>
+                            </tr>
+
+                             {% for item in cars %}
+                            <tr style="color:black">
+
+                                <td><a href="{% url 'cars:car_detail' pk=item.pk %}">{{item.brand}}</a></td>
+                                <td>{{item.model}}</td>
+                                <td align="center">{{item.production_year}}</td>
+                                <td>{{item.km}}</td>
+                                <td align="center">{{item.engine}}</td>
+                                <td>{{item.price}}</td>
+
+                            </tr>
+                                {% endfor %}
+                        </table>
+
+
+
+                        </div>
+                   <div class="col-lg-5 ftco-animate justify-content-center" >
+                       <h1 align="center">Сайт Autoscout</h1>
+
+                       <table>
+                            <tr style="color:blue">
+                                <th> Марка</th>
+                                <th> Модель</th>
+                                <th> Год выпуска</th>
+                                <th> Пробег</th>
+                                <th> Мощность двиг kw</th>
+                                <th> Цена, евро.</th>
+                            </tr>
+
+                             {% for item in cars_de %}
+                            <tr style="color:black">
+
+                                <td><a href="{% url 'cars:car_detail' pk=item.pk %}">{{item.brand}}</a></td>
+                                <td>{{item.model}}</td>
+                                <td align="center">{{item.production_year}}</td>
+                                <td>{{item.km}}</td>
+                                <td align="center">{{item.engine}}</td>
+                                <td>{{item.price}}</td>
+
+                            </tr>
+                                {% endfor %}
+                        </table>
+
+
+
+
+                   </div>
+                  <div class="col-lg-1"></div>
+
+
+      </div>
+    </div>
+
+
+
+
+{% endblock%}

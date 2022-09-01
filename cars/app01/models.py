@@ -23,7 +23,11 @@ class Vehicles(models.Model):
     km = models.IntegerField(default=1)
     milage = models.ForeignKey(Mileage, on_delete=models.CASCADE)
     price = models.IntegerField(default=1)
+    price_euro = models.IntegerField(default=1)
     engine = models.IntegerField(default=1)
+    custom_duty = models.IntegerField(default=1)
+    country = models.CharField(max_length=6)
+    link = models.CharField(max_length=64)
 
     def __str__(self):
         view = self.brand +" " +self.model +" " + str(self.price)+" руб." +" " + str(self.production_year)+ " "+str(self.km) + " км"
