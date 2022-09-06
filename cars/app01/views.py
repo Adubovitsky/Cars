@@ -105,26 +105,19 @@ class CarUpdateView(UserPassesTestMixin,UpdateView):
 	success_url = reverse_lazy('cars:index')
 	template_name = 'app01/car_create.html'
 
-
 	def test_func(self):
 		return self.request.user.is_superuser
 
-class CarDeleteView(DeleteView):
+class CarDeleteView(UserPassesTestMixin,DeleteView):
 	template_name = 'app01/car_delete_confirm.html'
 	model = Vehicles
 	success_url = reverse_lazy('cars:car_list')
 
-# class OrderCreateView(CreateView):
-# 	fields = "__all__"
-# 	model = Orders
-# 	success_url = reverse_lazy('cars:index')
-# 	template_name = 'app01/order_create.html'
-#
-# 	def post(self, request, *args, **kwargs):
-# 		return super().post(request, *args, **kwargs)
-#
-# 	def form_valid(self, form):
-# 		return super().form_valid(self, form)
+	def test_func(self):
+		return self.request.user.is_superuser
+
+
+
 @login_required
 def new_order(request):
 	if request.method == 'GET':
@@ -140,7 +133,17 @@ def new_order(request):
 			return render(request, 'app01/order_create.html', context={'form': form})
 
 
-
+# class OrderCreateView(CreateView):
+# 	fields = "__all__"
+# 	model = Orders
+# 	success_url = reverse_lazy('cars:index')
+# 	template_name = 'app01/order_create.html'
+#
+# 	def post(self, request, *args, **kwargs):
+# 		return super().post(request, *args, **kwargs)
+#
+# 	def form_valid(self, form):
+# 		return super().form_valid(self, form)
 
 
 # def new(request):
