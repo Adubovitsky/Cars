@@ -1,4 +1,5 @@
 from django.db import models
+from usersapp.models import SiteUser
 
 # Create your models here.
 
@@ -33,3 +34,8 @@ class Vehicles(models.Model):
         view = self.brand +" " +self.model +" " + str(self.price)+" руб." +" " + str(self.production_year)+ " "+str(self.km) + " км"
         # list.extend([self.brand, self.model])
         return str(view)
+
+class Orders(models.Model):
+    name = models.CharField(max_length=64)
+    text = models.TextField()
+    user = models.ForeignKey(SiteUser, on_delete=models.CASCADE)

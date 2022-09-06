@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 pages = 3
                 full_list = []
                 for page in range(pages):
-                    url = f"https://www.autoscout24.de/lst/{self.brand}/{self.model}?sort=standard&desc=0&ustate=N,U&atype=C&cy=D&ocs_listing=include&page={pages}"
+                    url = f"https://www.autoscout24.de/lst/{self.brand}/{self.model}?sort=standard&desc=0&ustate=N,U&atype=C&cy=D&fregfrom=2017&ocs_listing=include&page={pages}"
 
                     r = requests.get(url)
                     html = BS(r.content, 'html.parser')

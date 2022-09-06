@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+
 from django.views.generic.base import ContextMixin
-from .models import Vehicles
-from .forms import ContactForm, VehicleForm, SearchForm
+from .models import Vehicles, Orders
+from .forms import ContactForm, VehicleForm, SearchForm, OrdernewForm
 from django.core.mail import send_mail
 from django.core.management import commands, call_command
 from app01.management.commands import filldb
@@ -65,7 +68,7 @@ class CarListView(ListView):
 		return Vehicles.objects.all()
 
 
-class CarDetailView(DetailView):
+class CarDetailView(LoginRequiredMixin, DetailView):
 	model = Vehicles
 	template_name = 'app01/car_detail.html'
 
@@ -96,16 +99,49 @@ class CarCreateView(CreateView):
 		return super().form_valid(self, form)
 
 
-class CarUpdateView(UpdateView):
+class CarUpdateView(UserPassesTestMixin,UpdateView):
 	fields = "__all__"
 	model = Vehicles
 	success_url = reverse_lazy('cars:index')
 	template_name = 'app01/car_create.html'
 
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
 class CarDeleteView(DeleteView):
 	template_name = 'app01/car_delete_confirm.html'
 	model = Vehicles
 	success_url = reverse_lazy('cars:car_list')
+
+# class OrderCreateView(CreateView):
+# 	fields = "__all__"
+# 	model = Orders
+# 	success_url = reverse_lazy('cars:index')
+# 	template_name = 'app01/order_create.html'
+#
+# 	def post(self, request, *args, **kwargs):
+# 		return super().post(request, *args, **kwargs)
+#
+# 	def form_valid(self, form):
+# 		return super().form_valid(self, form)
+@login_required
+def new_order(request):
+	if request.method == 'GET':
+		form = OrdernewForm()
+		return render(request, 'app01/order_create.html', context={'form': form})
+	else:
+		form = OrdernewForm(request.POST, files=request.FILES )
+		if form.is_valid():
+			form.instance.user = request.user
+			form.save()
+			return HttpResponseRedirect(reverse('cars:index'))
+		else:
+			return render(request, 'app01/order_create.html', context={'form': form})
+
+
+
+
 
 # def new(request):
 # 	if request.method == 'GET':
