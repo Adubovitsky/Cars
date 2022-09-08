@@ -14,6 +14,10 @@ from app01.management.commands import filldb
 
 # Create your views here.
 
+def test (request):
+	cars = Vehicles.objects.all()
+	return render(request, 'app01/test.html', context={'cars': cars})
+
 def contacts(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
@@ -54,20 +58,6 @@ def main_carlist(request):
 class IndexView(TemplateView):
 	template_name = 'app01/index.html'
 
-
-class CarListView(ListView):
-	model = Vehicles
-	template_name = 'app01/car_list.html'
-
-	def get_context_data(self, *args, **kwargs):
-		context=super().get_context_data(*args, **kwargs)
-		context['title'] = 'Список машин'
-		return context
-
-	def get_queryset(self):
-		return Vehicles.objects.all()
-
-
 class CarDetailView(LoginRequiredMixin, DetailView):
 	model = Vehicles
 	template_name = 'app01/car_detail.html'
@@ -75,7 +65,6 @@ class CarDetailView(LoginRequiredMixin, DetailView):
 	def get(self,request,  *args, **kwargs):
 		self.v_id = kwargs['pk']
 		return super().get(request, *args, **kwargs)
-
 
 	def get_context_data(self, *args, **kwargs):
 		context=super().get_context_data(*args, **kwargs)
@@ -161,3 +150,16 @@ def new_order(request):
 # def main_view(request):
 # 	cars = Vehicles.objects.all()
 # 	return render(request, 'app01/index.html', context = {'cars': cars})
+
+# class CarListView(ListView):
+# 	model = Vehicles
+# 	template_name = 'app01/car_list.html'
+#
+# 	def get_context_data(self, *args, **kwargs):
+# 		context=super().get_context_data(*args, **kwargs)
+# 		context['title'] = 'Список машин'
+# 		return context
+#
+# 	def get_queryset(self):
+# 		return Vehicles.objects.all()
+#

@@ -9,7 +9,7 @@ class Age(models.Model):
     age_big_scale = models.CharField(max_length=16, default='skip')
 
     def __str__(self):
-        return str(self.production_year)
+        return f"Год выпуска {self.production_year} {self.age_big_scale}"
 
 class Mileage(models.Model):
     name = models.CharField(max_length=16, unique=True)
@@ -31,9 +31,20 @@ class Vehicles(models.Model):
     link = models.CharField(max_length=64)
 
     def __str__(self):
-        view = self.brand +" " +self.model +" " + str(self.price)+" руб." +" " + str(self.production_year)+ " "+str(self.km) + " км"
-        # list.extend([self.brand, self.model])
-        return str(view)
+        # view = self.brand +" " +self.model +" " + str(self.price)+" руб." +" " + str(self.production_year)+ " "+str(self.km) + " км"
+        # view = self.brand
+        view = f"{self.brand}"
+        return view
+
+    def custom(self):
+        return round(self.price*(0.3),0)
+
+    def full_cost(self):
+        if self.country == "de":
+            custom_pay = self.custom()
+            return self.price + custom_pay
+        else:
+            return self.price
 
 class Orders(models.Model):
     name = models.CharField(max_length=64)
