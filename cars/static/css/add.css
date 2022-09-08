@@ -37,3 +37,19 @@ color: white ;
 font-size: 22px;
 
 }
+
+.thnew{
+border:1px solid grey;
+text-align:center;
+vertical-align:center;
+}
+
+.newmargin{
+margin-left:10px
+}
+
+.privet{
+margin-left:80px;
+color:orange;
+margin-top:15px;
+}

@@ -46,16 +46,22 @@ class Command(BaseCommand):
                 count_new = data['listingSectionsCount']['new']
                 count_used = data['listingSectionsCount']['used']
                 self.count = count_used + count_new
+                print(self.count)
                 return self.count
 
             def get_keydata(self):
                 pages = self.count // 37 + 1
+                if pages >= 5:
+                    pages_dim = 5
+                else:
+                    pages_dim = pages
                 full_list = []
-                for page in range(pages):
+                for page in range(pages_dim):
                     result = requests.get(f"https://auto.ru/himki/cars/{self.brend}/{self.model}/all/?year_from=2017&km_age_to=100000&page={page}",
                                           headers=self.headers)
                     data = result.json()
                     offers = data['listing']['offers']
+                    print(offers)
                     for i in offers:
                         dict = {}
                         self.brend = i['vehicle_info']['mark_info']['name']
@@ -111,6 +117,7 @@ class Command(BaseCommand):
                   "skoda", "subaru", "toyota", "volkswagen", "volvo", "chevrolet", "chrysler"]
 
         if par in brands:
+            print(par, par2)
             carlist = cars(par, par2)
             carlist.get_count()
             return carlist.get_keydata()

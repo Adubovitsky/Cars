@@ -38,7 +38,12 @@
 
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Car<span>Finder</span></a>
+	      <a class="navbar-brand" href="{% url 'cars:index' %}">Car<span>Finder</span></a>
+            <div class="privet">
+                {% if user.is_authenticated %}
+                <p > Привет {{user}}</p>
+                {% endif %}
+            </div>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -49,6 +54,15 @@
 
 	          <li class="nav-item"><a href="{% url 'cars:car_list' %}" class="nav-link">Машины</a></li>
 	          <li class="nav-item"><a href="{% url 'cars:search' %}" class="nav-link">Поиск</a></li>
+
+                {% if user.is_authenticated %}
+
+                <li class="nav-item"><a href="{% url 'users:logout' %}" class="nav-link">Выйти</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'users:login' %}" class="nav-link">Вход</a></li>
+                 <li class="nav-item"><a href="{% url 'users:register' %}" class="nav-link">Регистрация</a></li>
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'cars:order_create' %}" class="nav-link">Сделать заявку</a></li>
 	          <li class="nav-item"><a href="{% url 'cars:contact' %}" class="nav-link">Контакты</a></li>
 	        </ul>
 	      </div>

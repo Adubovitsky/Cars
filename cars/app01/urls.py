@@ -14,4 +14,5 @@ urlpatterns =\
     path('car-create', views.CarCreateView.as_view(), name = 'car_create'),
     path('car-update/<int:pk>/', views.CarUpdateView.as_view(), name = 'car_update'),
     path('car-delete/<int:pk>/', views.CarDeleteView.as_view(), name = 'car_delete'),
+    path('order-create', views.new_order, name = 'order_create'),
    ]
