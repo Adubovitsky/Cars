@@ -20,6 +20,10 @@ class SearchForm(forms.Form):
     car_brand = forms.CharField(label = "Марка автомобиля", widget=forms.TextInput(attrs={'placeholder':'kia'}))
     car_model = forms.CharField(label="Модель", widget=forms.TextInput(attrs={'placeholder':'sportage'}))
 
+class FilterForm(forms.Form):
+    year = forms.CharField(label = "Год выпуска", widget=forms.TextInput(attrs={'placeholder':'2022'}))
+    miles = forms.CharField(label="Пробег", widget=forms.TextInput(attrs={'placeholder':'20000'}))
+
 # class OrderForm(forms.Form):
 #     name = forms.CharField(label="Имя")
 #     email = forms.EmailField(label="email")

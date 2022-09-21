@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from app01.models import Vehicles, Age, Mileage
+from app01.models import Vehicles, Age, Mileage, Location
 import requests
 from bs4 import BeautifulSoup as BS
 
@@ -35,10 +35,10 @@ class Command(BaseCommand):
 
             def get_keydata(self):
 
-                pages = 3
+                pages = 15
                 full_list = []
                 for page in range(pages):
-                    url = f"https://www.autoscout24.de/lst/{self.brand}/{self.model}?sort=standard&desc=0&ustate=N,U&atype=C&cy=D&fregfrom=2017&ocs_listing=include&page={pages}"
+                    url = f"https://www.autoscout24.de/lst/{self.brand}/{self.model}?sort=standard&desc=0&ustate=N,U&atype=C&cy=D&fregfrom=2017&page={page}"    #ocs_listing=include&
 
                     r = requests.get(url)
                     html = BS(r.content, 'html.parser')
@@ -113,7 +113,7 @@ class Command(BaseCommand):
                         dict['объем двигателя'] = self.engine
                         dict['пробег'] = self.mileage
                         dict['km'] = self.kilometer
-                        dict['страна'] = "de"
+                        dict['страна'] = "Европа"
                         dict['ссылка'] = 'https://www.autoscout24.de'+link
                         # dict['руль'] = self.steering_wheel
 
@@ -140,7 +140,7 @@ class Command(BaseCommand):
         par2 = options['par2']
         data = (Command.filldb(self, par, par2))
         for i in data:
-            Vehicles.objects.create(brand = i['брэнд'], model = i['модель'], production_year = Age.objects.get(production_year = i['год выпуска']),
+            Vehicles.objects.create(brand = i['брэнд'], model = i['модель'], pr_year = Age.objects.get(pr_year = i['год выпуска']),
                                     milage = Mileage.objects.get(name = i['пробег']), km = i['km'] , price_euro = i['цена евро'], price = i['цена'], engine = i['объем двигателя'],
-                                    country = i['страна'], link = i['ссылка'] )
+                                    country = Location.objects.get(name = i['страна']), link = i['ссылка'] )
 

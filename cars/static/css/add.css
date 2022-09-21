@@ -48,8 +48,31 @@ vertical-align:center;
 margin-left:10px
 }
 
+.trblue{
+color:blue;
+}
+
+
+
 .privet{
-margin-left:80px;
+margin-left:40px;
 color:orange;
 margin-top:15px;
+}
+
+.marl{
+padding:50px;
+}
+
+.height100{
+height:100px;
+}
+.pos-rel{
+position:relative
+}
+.fontorange{
+text-color:orange !important;
+}
+#my_id{
+text-color:orange;
 }

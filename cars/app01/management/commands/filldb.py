@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from app01.models import Vehicles, Age, Mileage
+from app01.models import Vehicles, Age, Mileage, Location
 import requests
 import pprint
 
@@ -108,7 +108,7 @@ class Command(BaseCommand):
                         dict['пробег'] = self.mileage
                         dict['km'] = self.kilometer
                         dict['руль'] = self.steering_wheel
-                        dict['страна'] = 'ru'
+                        dict['страна'] = 'Россия'
 
                         full_list.append(dict)
                 return full_list
@@ -134,6 +134,7 @@ class Command(BaseCommand):
         par2 = options['par2']
         data = (Command.filldb(self, par, par2))
         for i in data:
-            Vehicles.objects.create(brand = i['брэнд'], model = i['модель'], production_year = Age.objects.get(production_year = i['год выпуска']),
-                                    milage = Mileage.objects.get(name = i['пробег']), km = i['km'] , price = i['цена'], engine = i['объем двигателя'], country = i['страна'] )
+            Vehicles.objects.create(brand = i['брэнд'], model = i['модель'], pr_year = Age.objects.get(pr_year = i['год выпуска']),
+                                    milage = Mileage.objects.get(name = i['пробег']), km = i['km'] , price = i['цена'], engine = i['объем двигателя'],
+                                    country = Location.objects.get(name = i['страна']) )
 
