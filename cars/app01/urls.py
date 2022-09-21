@@ -11,8 +11,9 @@ urlpatterns =\
     # path('car-list', views.CarListView.as_view(), name = 'car_list'),
     path('car-list/', views.main_carlist, name = 'car_list'),
     path('car-detail/<int:pk>/', views.CarDetailView.as_view(), name = 'car_detail'),
-    path('car-create', views.CarCreateView.as_view(), name = 'car_create'),
+    path('car-create/', views.CarCreateView.as_view(), name = 'car_create'),
     path('car-update/<int:pk>/', views.CarUpdateView.as_view(), name = 'car_update'),
     path('car-delete/<int:pk>/', views.CarDeleteView.as_view(), name = 'car_delete'),
-    path('order-create', views.new_order, name = 'order_create'),
+    path('order-create/', views.new_order, name = 'order_create'),
+    path('test/', views.test, name='test')
    ]
