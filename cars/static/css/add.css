@@ -67,6 +67,11 @@ padding:50px;
 .height100{
 height:100px;
 }
+
+.height50{
+height:100px;
+}
+
 .pos-rel{
 position:relative
 }
@@ -75,4 +80,9 @@ text-color:orange !important;
 }
 #my_id{
 text-color:orange;
+}
+
+.margin_av{
+display:block;
+margin-top:80px;
 }

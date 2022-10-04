@@ -19,6 +19,13 @@ class Mileage(models.Model):
     def __str__(self):
         return str(self.name)
 
+class Milgr(models.Model):
+    name = models.CharField(max_length=16, unique=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
 class Location(models.Model):
     name = models.CharField(max_length=16, unique=True)
 
@@ -45,6 +52,7 @@ class Vehicles(models.Model):
     pr_year = models.ForeignKey(Age, on_delete=models.CASCADE)
     km = models.IntegerField(default=1)
     milage = models.ForeignKey(Mileage, on_delete=models.CASCADE)
+    milgr = models.ForeignKey(Milgr, on_delete=models.CASCADE)
     price = models.IntegerField(default=1)
     price_euro = models.IntegerField(default=1)
     engine = models.IntegerField(default=1)

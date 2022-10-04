@@ -5,28 +5,33 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.core.paginator import Paginator
 from django.views.generic.base import ContextMixin
-from .models import Vehicles, Orders
+from .models import Vehicles, Orders, Age, Mileage, Milgr, Location
 from .forms import ContactForm, VehicleForm, SearchForm, OrdernewForm
 from django.core.mail import send_mail
 from django.core.management import commands, call_command
 from app01.management.commands import filldb
-from django.db.models import Avg
-from.filters import VehicleFilter
-
+from django.db.models import Avg, Count
+from .filters import VehicleFilter
+from django_pivot.pivot import pivot
+import pandas as pd
 
 # Create your views here.
 
 def test (request):
 	context = {}
-	cars = Vehicles.objects_de.all()
-	context['cars'] = cars
-	context['test'] ='надпись для теста'
-	return render(request, 'app01/test.html', context=context)
+	# pv = pivot(Vehicles, ['country', 'pr_year'], 'milgr', 'price', aggregation=Count, default=0)
+	# context['carsde'] = Vehicles.objects_de.all().first()
+	# query = Vehicles.objects.select_related('country').all()
+	# context['test']= Vehicles.objects.filter(country__name = 'Россия').aggregate(Count('id'), Avg('price'))
+	# context['test1'] = Vehicles.objects.filter(country__name='Европа').aggregate(Count('id'), Avg('price'))
+	# context['num_de'] = query.filter(country__name = 'Европа').count()
+	# context['carrus'] = Vehicles.objects_rus.all().first()
+	return render(request, 'app01/test.html', context)
 
 def filter(request):
 	context={}
 
-	filtered_vehicles = VehicleFilter(request.GET, queryset=Vehicles.objects.all())
+	filtered_vehicles = VehicleFilter(request.GET, queryset=Vehicles.objects.select_related('pr_year','milage','country').all())
 	context['filtered_cars'] = filtered_vehicles
 
 	paginated_filtered_vehicles = Paginator(filtered_vehicles.qs, 9)
@@ -38,85 +43,61 @@ def filter(request):
 
 
 def summary (request):
-	def count(year, km):
-		return Vehicles.objects_rus.filter(pr_year__pr_year=year, milage__mil_group=km).count()
-
-	def avg_price(year, km):
-		return Vehicles.objects_rus.filter(pr_year__pr_year=year, milage__mil_group = km).aggregate(Avg('price'))['price__avg']
-
-	def count_de(year, km):
-		return Vehicles.objects_de.filter(pr_year__pr_year=year, milage__mil_group=km).count()
-
-	def avg_price_de(year, km):
-		return Vehicles.objects_de.filter(pr_year__pr_year=year, milage__mil_group = km).aggregate(Avg('price'))['price__avg']
-
 	context = {}
-	context['test']=Vehicles.objects_rus.all().count()
-	context['num_de'] = Vehicles.objects_de.all().count()
+	pv = pivot(Vehicles, ['country', 'pr_year'], 'milgr', 'price', aggregation=Count, default=0)
+	var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, var11, var12 = pv
+	lvar1 = list(var1.values())
+	lvar2 = list(var2.values())
+	lvar3 = list(var3.values())
+	lvar4 = list(var4.values())
+	lvar5 = list(var5.values())
+	lvar6 = list(var6.values())
+	lvar7 = list(var7.values())
+	lvar8 = list(var8.values())
+	lvar9 = list(var9.values())
+	lvar10 = list(var10.values())
+	lvar11 = list(var11.values())
+	lvar12 = list(var12.values())
+	context['pv'] = pv
+	context['q_rus_22'] = lvar1
+	context['q_rus_21'] = lvar2
+	context['q_rus_20'] = lvar3
+	context['q_rus_19'] = lvar4
+	context['q_rus_18'] = lvar5
+	context['q_de_22'] = lvar7
+	context['q_de_21'] = lvar8
+	context['q_de_20'] = lvar9
+	context['q_de_19'] = lvar10
+	context['q_de_18'] = lvar11
+
+	pv = pivot(Vehicles, ['country', 'pr_year'], 'milgr', 'price', aggregation=Avg, default=0.0)
+	vr1, vr2, vr3, vr4, vr5, vr6, vr7, vr8, vr9, vr10, vr11, vr12 = pv
+	lvr1 = list(vr1.values())
+	lvr2 = list(vr2.values())
+	lvr3 = list(vr3.values())
+	lvr4 = list(vr4.values())
+	lvr5 = list(vr5.values())
+	lvr6 = list(vr6.values())
+	lvr7 = list(vr7.values())
+	lvr8 = list(vr8.values())
+	lvr9 = list(vr9.values())
+	lvr10 = list(vr10.values())
+	lvr11 = list(vr11.values())
+	lvr12 = list(vr12.values())
+	context['pv'] = pv
+	context['p_rus_22'] = lvr1
+	context['p_rus_21'] = lvr2
+	context['p_rus_20'] = lvr3
+	context['p_rus_19'] = lvr4
+	context['p_rus_18'] = lvr5
+	context['p_de_22'] = lvr7
+	context['p_de_21'] = lvr8
+	context['p_de_20'] = lvr9
+	context['p_de_19'] = lvr10
+	context['p_de_18'] = lvr11
+
 	context['car'] = Vehicles.objects_rus.all().first()
-	context['quant_rus22_30'] = count(2022, 'до 30')
-	context['price_rus22_30'] = avg_price( 2022, 'до 30')
-	context['quant_rus22_70'] = count(2022, 'до 70')
-	context['price_rus22_70'] = avg_price(2022, 'до 70')
-	context['quant_rus22_120'] = count(2022, 'до 120')
-	context['price_rus22_120'] = avg_price(2022, 'до 120')
-	context['quant_rus21_30'] = count(2021, 'до 30')
-	context['price_rus21_30'] = avg_price(2021, 'до 30')
-	context['quant_rus21_70'] = count(2021, 'до 70')
-	context['price_rus21_70'] = avg_price(2021, 'до 70')
-	context['quant_rus21_120'] = count(2021, 'до 120')
-	context['price_rus21_120'] = avg_price(2021, 'до 120')
-	context['quant_rus20_30'] = count(2020, 'до 30')
-	context['price_rus20_30'] = avg_price(2020, 'до 30')
-	context['quant_rus20_70'] = count(2020, 'до 70')
-	context['price_rus20_70'] = avg_price(2020, 'до 70')
-	context['quant_rus20_120'] = count(2020, 'до 120')
-	context['price_rus20_120'] = avg_price(2020, 'до 120')
-	context['quant_rus19_30'] = count(2019, 'до 30')
-	context['price_rus19_30'] = avg_price(2019, 'до 30')
-	context['quant_rus19_70'] = count(2019, 'до 70')
-	context['price_rus19_70'] = avg_price(2019, 'до 70')
-	context['quant_rus19_120'] = count(2019, 'до 120')
-	context['price_rus19_120'] = avg_price(2019, 'до 120')
-	context['quant_rus18_30'] = count(2018, 'до 30')
-	context['price_rus18_30'] = avg_price(2018, 'до 30')
-	context['quant_rus18_70'] = count(2018, 'до 70')
-	context['price_rus18_70'] = avg_price(2018, 'до 70')
-	context['quant_rus18_120'] = count(2018, 'до 120')
-	context['price_rus18_120'] = avg_price(2018, 'до 120')
-
-	context['quant_eu22_30'] = count_de(2022, 'до 30')
-	context['price_eu22_30'] = avg_price_de(2022, 'до 30')
-	context['quant_eu22_70'] = count_de(2022, 'до 70')
-	context['price_eu22_70'] = avg_price_de(2022, 'до 70')
-	context['quant_eu22_120'] = count_de(2022, 'до 120')
-	context['price_eu22_120'] = avg_price_de(2022, 'до 120')
-	context['quant_eu21_30'] = count_de(2021, 'до 30')
-	context['price_eu21_30'] = avg_price_de(2021, 'до 30')
-	context['quant_eu21_70'] = count_de(2021, 'до 70')
-	context['price_eu21_70'] = avg_price_de(2021, 'до 70')
-	context['quant_eu21_120'] = count_de(2021, 'до 120')
-	context['price_eu21_120'] = avg_price_de(2021, 'до 120')
-	context['quant_eu20_30'] = count_de(2020, 'до 30')
-	context['price_eu20_30'] = avg_price_de(2020, 'до 30')
-	context['quant_eu20_70'] = count_de(2020, 'до 70')
-	context['price_eu20_70'] = avg_price_de(2020, 'до 70')
-	context['quant_eu20_120'] = count_de(2020, 'до 120')
-	context['price_eu20_120'] = avg_price_de(2020, 'до 120')
-	context['quant_eu19_30'] = count_de(2019, 'до 30')
-	context['price_eu19_30'] = avg_price_de(2019, 'до 30')
-	context['quant_eu19_70'] = count_de(2019, 'до 70')
-	context['price_eu19_70'] = avg_price_de(2019, 'до 70')
-	context['quant_eu19_120'] = count_de(2019, 'до 120')
-	context['price_eu19_120'] = avg_price_de(2019, 'до 120')
-	context['quant_eu18_30'] = count_de(2018, 'до 30')
-	context['price_eu18_30'] = avg_price_de(2018, 'до 30')
-	context['quant_eu18_70'] = count_de(2018, 'до 70')
-	context['price_eu18_70'] = avg_price_de(2018, 'до 70')
-	context['quant_eu18_120'] = count_de(2018, 'до 120')
-	context['price_eu18_120'] = avg_price_de(2018, 'до 120')
-
-	return render(request, 'app01/summary.html', context=context)
+	return render(request, 'app01/summary.html', context)
 
 def contacts(request):
 	if request.method == 'POST':
@@ -138,8 +119,13 @@ def search(request):
 		form = SearchForm(request.POST)
 		if form.is_valid():
 			Vehicles.objects.all().delete()
+			Age.objects.all().delete()
+			Mileage.objects.all().delete()
+			Location.objects.all().delete()
+			Milgr.objects.all().delete()
 			brand = form.cleaned_data['car_brand']
 			model = form.cleaned_data['car_model']
+			call_command('fill_dict')
 			call_command('filldb', brand, model)
 			call_command('filldb_de', brand, model)
 			return HttpResponseRedirect(reverse('cars:summary'))
@@ -227,6 +213,7 @@ class CarUpdateView(UserPassesTestMixin,UpdateView):
 
 	def test_func(self):
 		return self.request.user.is_superuser
+
 
 class CarDeleteView(UserPassesTestMixin,DeleteView):
 	template_name = 'app01/car_delete_confirm.html'
