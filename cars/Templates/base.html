@@ -26,12 +26,13 @@
 
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/add.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
       <style>
           .text2{color:black; font-size:20px}
       </style>
-
+{% block head %}{% endblock %}
 
   </head>
   <body>
@@ -51,9 +52,10 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="{% url 'cars:index' %}" class="nav-link">Главная</a></li>
+                 <li class="nav-item"><a href="{% url 'cars:search' %}" class="nav-link">Поиск</a></li>
+	          <li class="nav-item"><a href="{% url 'cars:filter_list' %}" class="nav-link">Машины</a></li>
+	          <li class="nav-item"><a href="{% url 'cars:summary' %}" class="nav-link">Аналитика</a></li>
 
-	          <li class="nav-item"><a href="{% url 'cars:car_list' %}" class="nav-link">Машины</a></li>
-	          <li class="nav-item"><a href="{% url 'cars:search' %}" class="nav-link">Поиск</a></li>
 
                 {% if user.is_authenticated %}
 
