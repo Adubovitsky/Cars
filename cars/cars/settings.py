@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g(dj_iau*q!@o@-4(w-v7u1+n@-gy0uzunadz5$ouzf8&dmb_+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,6 +79,18 @@ WSGI_APPLICATION = 'cars.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'NAME': 'cars',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'USER': 'username',
+#         'PASSWORD': 'nu123456',
+#         'HOST': 'localhost'
+#     }
+# }
+
+
 
 DATABASES = {
     'default': {
