@@ -1,5 +1,6 @@
+
 from django.core.management.base import BaseCommand
-from app01.models import Vehicles, Age, Mileage, Location
+from app01.models import Vehicles, Age, Mileage, Location, Milgr
 
 
 class Command(BaseCommand):
@@ -10,6 +11,7 @@ class Command(BaseCommand):
         Age.objects.all().delete()
         Mileage.objects.all().delete()
         Location.objects.all().delete()
+        Milgr.objects.all().delete()
         age_table = [(2022, "новая", "до 5 лет"),
                     (2021, "до 3 лет", "до 5 лет"),
                      (2020, "до 3 лет", "до 5 лет"),
@@ -45,3 +47,9 @@ class Command(BaseCommand):
 
         Location.objects.create(name='Россия')
         Location.objects.create(name='Европа')
+
+        milgr_table = ['до 30','до 70','до 120', 'свыше 120']
+        for i in milgr_table:
+            Milgr.objects.create(name=i)
+
+

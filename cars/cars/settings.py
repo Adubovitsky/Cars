@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g(dj_iau*q!@o@-4(w-v7u1+n@-gy0uzunadz5$ouzf8&dmb_+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'app01',
     'usersapp',
     'toolsapp',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'cars.urls'
@@ -77,6 +79,18 @@ WSGI_APPLICATION = 'cars.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'NAME': 'cars',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'USER': 'username',
+#         'PASSWORD': 'nu123456',
+#         'HOST': 'localhost'
+#     }
+# }
+
+
 
 DATABASES = {
     'default': {
@@ -140,3 +154,9 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # Куда идти на логин
 LOGIN_URL = '/users/login/'
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]

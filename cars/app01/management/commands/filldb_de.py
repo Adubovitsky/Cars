@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from app01.models import Vehicles, Age, Mileage, Location
+from app01.models import Vehicles, Age, Mileage, Location, Milgr
 import requests
 from bs4 import BeautifulSoup as BS
 
@@ -15,6 +15,7 @@ class Command(BaseCommand):
                 self.brand = brand
                 self.kilometer = 0
                 self.mileage = 0
+                self.milgr = 0
                 self.steering_wheel = "left"
                 self.engine = 1100
                 self.descrip = ""
@@ -68,30 +69,43 @@ class Command(BaseCommand):
 
                         if self.kilometer <= 10000:
                             self.mileage = "до 10 тыс. км."
+                            self.milgr = "до 30"
                         elif self.kilometer <= 20000:
                             self.mileage = "до 20 тыс. км."
+                            self.milgr = "до 30"
                         elif self.kilometer <= 30000:
                             self.mileage = "до 30 тыс. км."
+                            self.milgr = "до 30"
                         elif self.kilometer <= 40000:
                             self.mileage = "до 40 тыс. км."
+                            self.milgr = "до 70"
                         elif self.kilometer <= 50000:
                             self.mileage = "до 50 тыс. км."
+                            self.milgr = "до 70"
                         elif self.kilometer <= 60000:
                             self.mileage = "до 60 тыс. км."
+                            self.milgr = "до 70"
                         elif self.kilometer <= 70000:
                             self.mileage = "до 70 тыс. км."
+                            self.milgr = "до 70"
                         elif self.kilometer <= 80000:
                             self.mileage = "до 80 тыс. км."
+                            self.milgr = "до 120"
                         elif self.kilometer <= 90000:
                             self.mileage = "до 90 тыс. км."
+                            self.milgr = "до 120"
                         elif self.kilometer <= 100000:
                             self.mileage = "до 100 тыс. км."
+                            self.milgr = "до 120"
                         elif self.kilometer <= 110000:
                             self.mileage = "до 110 тыс. км."
+                            self.milgr = "до 120"
                         elif self.kilometer <= 120000:
                             self.mileage = "до 120 тыс. км."
+                            self.milgr = "до 120"
                         elif self.kilometer > 120000:
                             self.mileage = "свыше 120 тыс. км."
+                            self.milgr = "свыше 120"
 
                         res1 = i.findAll('span', class_='VehicleDetailTable_item__koEV4')
                         engine = res1[2].text
@@ -112,6 +126,7 @@ class Command(BaseCommand):
                         dict['год выпуска'] = self.year
                         dict['объем двигателя'] = self.engine
                         dict['пробег'] = self.mileage
+                        dict['группа пробега'] = self.milgr
                         dict['km'] = self.kilometer
                         dict['страна'] = "Европа"
                         dict['ссылка'] = 'https://www.autoscout24.de'+link
@@ -142,5 +157,6 @@ class Command(BaseCommand):
         for i in data:
             Vehicles.objects.create(brand = i['брэнд'], model = i['модель'], pr_year = Age.objects.get(pr_year = i['год выпуска']),
                                     milage = Mileage.objects.get(name = i['пробег']), km = i['km'] , price_euro = i['цена евро'], price = i['цена'], engine = i['объем двигателя'],
-                                    country = Location.objects.get(name = i['страна']), link = i['ссылка'] )
+                                    country = Location.objects.get(name = i['страна']), link = i['ссылка'],
+                                    milgr = Milgr.objects.get(name = i['группа пробега']))
 
