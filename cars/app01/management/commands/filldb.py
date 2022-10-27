@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from app01.models import Vehicles, Age, Mileage, Location, Milgr
+from app01.models import Vehicles, Age, Location, Milgr
 
 import requests
 import pprint

@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.core.paginator import Paginator
 from django.views.generic.base import ContextMixin
-from .models import Vehicles, Orders, Age, Mileage, Milgr, Location
+from .models import Vehicles, Orders, Age, Milgr, Location
 from .forms import ContactForm, VehicleForm, SearchForm, OrdernewForm
 from django.core.mail import send_mail
 from django.core.management import commands, call_command
@@ -33,7 +33,7 @@ def test (request):
 def filter(request):
 	context={}
 
-	filtered_vehicles = VehicleFilter(request.GET, queryset=Vehicles.objects.select_related('pr_year','milage','country').all())
+	filtered_vehicles = VehicleFilter(request.GET, queryset=Vehicles.objects.select_related('pr_year','milgr','country').all())
 	context['filtered_cars'] = filtered_vehicles
 
 	paginated_filtered_vehicles = Paginator(filtered_vehicles.qs, 9)

@@ -12,12 +12,12 @@ class Age(models.Model):
     def __str__(self):
         return f"{self.pr_year}"
 
-class Mileage(models.Model):
-    name = models.CharField(max_length=64, unique=True)
-    mil_group = models.CharField(max_length=64, default='skip')
-
-    def __str__(self):
-        return str(self.name)
+# class Mileage(models.Model):
+#     name = models.CharField(max_length=64, unique=True)
+#     mil_group = models.CharField(max_length=64, default='skip')
+#
+#     def __str__(self):
+#         return str(self.name)
 
 class Milgr(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -51,7 +51,7 @@ class Vehicles(models.Model):
     model = models.CharField(max_length=32, default="not given")
     pr_year = models.ForeignKey(Age, on_delete=models.CASCADE)
     km = models.IntegerField(default=1)
-    milage = models.ForeignKey(Mileage, on_delete=models.CASCADE)
+    # milage = models.ForeignKey(Mileage, on_delete=models.CASCADE)
     milgr = models.ForeignKey(Milgr, on_delete=models.CASCADE)
     price = models.IntegerField(default=1)
     price_euro = models.IntegerField(default=1)

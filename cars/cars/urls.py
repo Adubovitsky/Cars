@@ -16,13 +16,27 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from rest_framework import routers
+from app01.api_view import AgeViewSet, VehicleViewSet, MilgrViewSet, LocationViewSet
+
+router = routers.DefaultRouter()
+router.register(r'ages', AgeViewSet)
+router.register(r'veh', VehicleViewSet)
+router.register(r'mil', MilgrViewSet)
+router.register(r'location', LocationViewSet)
+
 
 # app_name = 'app01'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app01.urls', namespace='cars')),
-    path('users/', include('usersapp.urls', namespace='users'))
+    path('users/', include('usersapp.urls', namespace='users')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('ages/', include(router.urls)),
+    path('veh/', include(router.urls)),
+    path('mil/', include(router.urls)),
+    path('location/', include(router.urls)),
 ]
 
 # if settings.DEBUG:

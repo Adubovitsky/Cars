@@ -5,4 +5,4 @@ class VehicleFilter(django_filters.FilterSet):
 
     class Meta:
         model = Vehicles
-        fields = ['pr_year', 'milage', 'country']
+        fields = ['pr_year', 'milgr', 'country']
